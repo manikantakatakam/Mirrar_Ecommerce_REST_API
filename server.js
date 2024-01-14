@@ -1,19 +1,20 @@
 const express = require('express')
 const mongoose = require('mongoose')
-const product = require('./schema/ProductSchema')
+const Product = require('./schema/ProductSchema')
 const app = express()
 
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
-app.get('/', (req, res) =>{
-    res.send('Welcome to my server')
+
+
+app.get('/', (req, res) => {
+    res.send('Hello NODE API')
 })
 
-app.get('/user', (res, req) => {
-    res.send('hello user my name is Manikanta')
+app.get('/user', (req, res) => {
+    res.send('Hello Blog, My name is mani')
 })
-
 
 app.get('/products', async(req, res) => {
     try {
@@ -35,19 +36,18 @@ app.get('/products/:id', async(req, res) =>{
 })
 
 
-
-app.post('/products', async(res, req) => {
+app.post('/products', async(req, res) => {
     try {
         const product = await Product.create(req.body)
         res.status(200).json(product);
         
     } catch (error) {
         console.log(error.message);
-        res.status(404).json({message: error.message})
+        res.status(500).json({message: error.message})
     }
 })
 
-
+// update a product
 app.put('/products/:id', async(req, res) => {
     try {
         const {id} = req.params;
@@ -64,6 +64,7 @@ app.put('/products/:id', async(req, res) => {
     }
 })
 
+// delete a product
 
 app.delete('/products/:id', async(req, res) =>{
     try {
@@ -81,13 +82,12 @@ app.delete('/products/:id', async(req, res) =>{
 
 mongoose.set("strictQuery", false)
 mongoose.
-connect('mongodb+srv://mani22kmk222:12345678mani@cluster0.jgwffnc.mongodb.net/?retryWrites=true&w=majority')
+connect('mongodb+srv://mani22kmk222:12345678mani@cluster0.jgwffnc.mongodb.net/Rest-Api?retryWrites=true&w=majority')
 .then(() => {
     console.log('connected to MongoDB')
     app.listen(8000, ()=> {
-        console.log(`Node API app is running on port 8000`)
+        console.log(`Node API app is running on port 3000`)
     });
 }).catch((error) => {
     console.log(error)
 })
-

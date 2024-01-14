@@ -9,6 +9,7 @@ const productSchema = mongoose.Schema({
     quantity : {
         type: Number,
         required: true,
+        default: 0,
         },
     description : {
         type : String,
@@ -17,7 +18,11 @@ const productSchema = mongoose.Schema({
     image : {
         type: String,
         required: false,
-        },
+        }
+    },
+
+    {
+        timestamps: true
     }
 
     )
